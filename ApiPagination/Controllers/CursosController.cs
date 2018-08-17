@@ -22,5 +22,19 @@ namespace ApiPagination.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = curso.Id }, curso);
         }
+
+        public IHttpActionResult GetCurso(int id)
+        {
+            if (id <= 0)
+                return BadRequest("O id deve ser um número maior que zero.");
+
+            var curso = db.Cursos.Find(id);
+
+            if (curso == null)
+                return NotFound();
+
+            return Ok(curso);
+        }
+
     }
 }
