@@ -12,6 +12,15 @@ namespace ApiPagination.Controllers
     {
         private ApiPaginationContext db = new ApiPaginationContext();
 
+        public IHttpActionResult PostCurso(Curso curso)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
+            db.Cursos.Add(curso);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = curso.Id }, curso);
+        }
     }
 }
