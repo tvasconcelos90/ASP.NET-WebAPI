@@ -69,5 +69,12 @@ namespace ApiPagination.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        public IHttpActionResult GetCursos()
+        {
+            var cursos = db.Cursos.OrderBy(c => c.DataPublicacao);
+
+            return Ok(cursos);
+        }
+
     }
 }
