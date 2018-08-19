@@ -71,6 +71,17 @@ namespace ApiPagination.Controllers
 
         public IHttpActionResult GetCursos(int pagina = 1, int tamanhoPagina = 10)
         {
+            if (pagina <= 0 || tamanhoPagina <= 0)
+                return BadRequest("Os parâmetros página e tamanhoPágina devem ser maiores que zero.");
+
+            if (tamanhoPagina > 10)
+                return BadRequest("O tamanho máximo de página permitido é 10.");
+
+            int totalPaginas = (int)Math.Ceiling(db.Cursos.Count() / Convert.ToDecimal(tamanhoPagina));
+
+            if (pagina > totalPaginas)
+                return BadRequest("A página solicitada não existe.");
+
             var cursos = db.Cursos.OrderBy(c => c.DataPublicacao).Skip(tamanhoPagina * (pagina -1)).Take(tamanhoPagina);
 
             return Ok(cursos);
