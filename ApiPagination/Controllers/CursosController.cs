@@ -69,9 +69,9 @@ namespace ApiPagination.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        public IHttpActionResult GetCursos()
+        public IHttpActionResult GetCursos(int pagina = 1, int tamanhoPagina = 10)
         {
-            var cursos = db.Cursos.OrderBy(c => c.DataPublicacao);
+            var cursos = db.Cursos.OrderBy(c => c.DataPublicacao).Skip(tamanhoPagina * (pagina -1)).Take(tamanhoPagina);
 
             return Ok(cursos);
         }
